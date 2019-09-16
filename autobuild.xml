@@ -580,9 +580,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c1cd0a6a08f71f357a01fba55e0a6b16</string>
+              <string>8fb4c36f73eda514a368cb9aa0eab04b</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/38605/326402/dullahan-1.1.1320_3.3626.1895.g7001d56-darwin64-527866.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/43355/385492/dullahan-1.3.201909161615_76.1.13%2Bgf19c584%2Bchromium-76.0.3809.132-darwin64-530990.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -592,9 +592,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c0129834f8995f9c354def141cf0e12b</string>
+              <string>e31bcbf923fbf6e09b8507344a939831</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/38602/326395/dullahan-1.1.1320_3.3626.1895.g7001d56-windows-527866.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/43336/384992/dullahan-1.3.201909161921_76.1.13%2Bgf19c584%2Bchromium-76.0.3809.132-windows-530977.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -604,16 +604,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0e2206a105b1e48ee89951d310b21025</string>
+              <string>c55cac3a7a93b1bdc73a74c65144063f</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/38601/326388/dullahan-1.1.1320_3.3626.1895.g7001d56-windows64-527866.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/43335/384985/dullahan-1.3.201909161918_76.1.13%2Bgf19c584%2Bchromium-76.0.3809.132-windows64-530977.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.1.1320_3.3626.1895.g7001d56</string>
+        <string>1.3.201909161615_76.1.13+gf19c584+chromium-76.0.3809.132</string>
       </map>
       <key>elfio</key>
       <map>
