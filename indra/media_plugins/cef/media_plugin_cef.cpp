@@ -88,6 +88,7 @@ private:
 	bool mPluginsEnabled;
 	bool mJavascriptEnabled;
 	bool mDisableGPU;
+	bool mDisableNetworkService;
 	std::string mUserAgentSubtring;
 	std::string mAuthUsername;
 	std::string mAuthPassword;
@@ -120,6 +121,7 @@ MediaPluginBase(host_send_func, host_user_data)
 	mPluginsEnabled = false;
 	mJavascriptEnabled = true;
 	mDisableGPU = false;
+	mDisableNetworkService = true;
 	mUserAgentSubtring = "";
 	mAuthUsername = "";
 	mAuthPassword = "";
@@ -511,6 +513,9 @@ void MediaPluginCEF::receiveMessage(const char* message_string)
 				settings.cache_path = mCachePath;
 				settings.cookies_enabled = mCookiesEnabled;
 				settings.disable_gpu = mDisableGPU;
+#if LL_DARWIN
+				settings.disable_network_service = mDisableNetworkService;
+#endif
 				settings.flash_enabled = mPluginsEnabled;
 				settings.flip_mouse_y = false;
 				settings.flip_pixels_y = true;
