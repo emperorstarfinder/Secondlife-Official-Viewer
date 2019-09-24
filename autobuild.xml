@@ -3218,9 +3218,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ac517068d85b3122ea4cf1923a6cb089</string>
+              <string>f8155e7cfc5c9e818394a69f245ddc01</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31421/263506/vlc_bin-2.2.8.523913-windows-523913.tar.bz2</string>
+              <string>http://ll-build-secondlife-development.s3.amazonaws.com/ct2/9941/43002/vlc_bin-3.0.8.509701-windows-509701.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -3239,7 +3239,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
         </map>
         <key>version</key>
-        <string>3.0.8.509699</string>
+        <string>3.0.8.509701</string>
       </map>
       <key>xmlrpc-epi</key>
       <map>
