@@ -34,6 +34,9 @@
 #include "llpluginmessageclasses.h"
 #include "media_plugin_base.h"
 
+// required as of VLC 3.x
+#define ssize_t SSIZE_T
+
 #include "vlc/vlc.h"
 #include "vlc/libvlc_version.h"
 
@@ -274,6 +277,14 @@ void MediaPluginLibVLC::eventCallbacks(const libvlc_event_t* event, void* ptr)
 void MediaPluginLibVLC::playMedia()
 {
 	if (mURL.length() == 0)
+	{
+		return;
+	}
+
+	// This function can and does get called multiple times and sometimes gets
+	// called before we know the media size so the width and height are both 0
+	// If this is the case, there is nothing we can do so just bail
+	if (mWidth == 0 || mHeight == 0)
 	{
 		return;
 	}

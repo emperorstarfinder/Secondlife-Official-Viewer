@@ -3230,16 +3230,16 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>6795a5d2b15117e50af469121099d5fa</string>
+              <string>91cbd3fc1d07b5237b1b465a9fce31c3</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31420/263499/vlc_bin-2.2.8.523913-windows64-523913.tar.bz2</string>
+              <string>http://ll-build-secondlife-development.s3.amazonaws.com/ct2/9939/42988/vlc_bin-3.0.8.509699-windows64-509699.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>2.2.8.511703</string>
+        <string>3.0.8.509699</string>
       </map>
       <key>xmlrpc-epi</key>
       <map>
