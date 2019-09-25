@@ -34,8 +34,10 @@
 #include "llpluginmessageclasses.h"
 #include "media_plugin_base.h"
 
+#if LL_WINDOWS
 // required as of VLC 3.x
 #define ssize_t SSIZE_T
+#endif
 
 #include "vlc/vlc.h"
 #include "vlc/libvlc_version.h"
