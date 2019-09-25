@@ -3194,9 +3194,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>6fc090b52db2dcc100ef616c8538e3f2</string>
+              <string>9ae56e079a31103462c23ff26f600472</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31393/263372/vlc_bin-2.2.8.523913-darwin64-523913.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/43712/389298/vlc_bin-3.0.8.531217-darwin64-531217.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -3218,9 +3218,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f8155e7cfc5c9e818394a69f245ddc01</string>
+              <string>dd74e9828f403f1e4dc84d2d8f8560b7</string>
               <key>url</key>
-              <string>http://ll-build-secondlife-development.s3.amazonaws.com/ct2/9941/43002/vlc_bin-3.0.8.509701-windows-509701.tar.bz2</string>
+              <string>http://ll-build-secondlife-development.s3.amazonaws.com/ct2/9945/43030/vlc_bin-3.0.8.509705-windows-509705.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -3230,16 +3230,16 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>91cbd3fc1d07b5237b1b465a9fce31c3</string>
+              <string>c9e52d3d41e40b7f6d8c92ad9895fc0d</string>
               <key>url</key>
-              <string>http://ll-build-secondlife-development.s3.amazonaws.com/ct2/9939/42988/vlc_bin-3.0.8.509699-windows64-509699.tar.bz2</string>
+              <string>http://ll-build-secondlife-development.s3.amazonaws.com/ct2/9944/43023/vlc_bin-3.0.8.509704-windows64-509704.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>3.0.8.509701</string>
+        <string>3.0.8.509705</string>
       </map>
       <key>xmlrpc-epi</key>
       <map>
