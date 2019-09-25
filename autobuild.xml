@@ -3194,9 +3194,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>9ae56e079a31103462c23ff26f600472</string>
+              <string>7052e90e09efdd3f3d6be4556117db84</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/43712/389298/vlc_bin-3.0.8.531217-darwin64-531217.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/43738/389630/vlc_bin-3.0.8.531233-darwin64-531233.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -3239,7 +3239,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
         </map>
         <key>version</key>
-        <string>3.0.8.509705</string>
+        <string>3.0.8.531233</string>
       </map>
       <key>xmlrpc-epi</key>
       <map>
