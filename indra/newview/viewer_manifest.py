@@ -1213,8 +1213,26 @@ class DarwinManifest(ViewerManifest):
                         [newpath, self.dst_path_of(dylibexecutable)])
 
                     # copy LibVLC plugin itself
+                    vlc_dylibexecutable = 'media_plugin_libvlc.dylib'
                     self.path2basename("../media_plugins/libvlc/" + self.args['configuration'],
-                                       "media_plugin_libvlc.dylib")
+                                       vlc_dylibexecutable)
+
+                    vlc_change_command = [
+                        'install_name_tool',
+                        '-change',
+                    ]
+
+                    # In a change from what was required in VLC 2.x, it now seems we have to stamp the 
+                    # media plugin with the location of the VLC DLLs so that it can find them after the
+                    # app bundle is constructed. It's a mystery why this wasn't needed before - indeed,
+                    # the media_plugin_libvlc.dylib is stamped with a viewer specific location for the 
+                    # 2.x VLC dylibs but I wasn't able to find where that happened - it wasn't here.
+                    self.run_command(
+                        vlc_change_command +
+                        ['@rpath/libvlc.dylib', '@loader_path/lib/libvlc.5.dylib', self.dst_path_of(vlc_dylibexecutable)])
+                    self.run_command(
+                        vlc_change_command +
+                        ['@rpath/libvlccore.dylib', '@loader_path/lib/libvlccore.9.dylib', self.dst_path_of(vlc_dylibexecutable)])
 
                     # copy LibVLC dynamic libraries
                     with self.prefix(src=relpkgdir, dst="lib"):
