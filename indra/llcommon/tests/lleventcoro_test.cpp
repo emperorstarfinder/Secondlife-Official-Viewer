@@ -90,12 +90,12 @@ private:
 namespace tut
 {
     struct test_data
-    {
+        {
         Sync mSync;
         ImmediateAPI immediateAPI{mSync};
-        std::string replyName, errorName, threw, stringdata;
-        LLSD result, errordata;
-        int which;
+    std::string replyName, errorName, threw, stringdata;
+    LLSD result, errordata;
+    int which;
 
         void explicit_wait(boost::shared_ptr<LLCoros::Promise<std::string>>& cbp);
         void waitForEventOn1();
@@ -211,7 +211,170 @@ namespace tut
         ensure_equals(result.asString(), "received");
     }
 
-    void test_data::postAndWait1()
+    void coroPumps()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            replyName = waiter.getName0();
+            errorName = waiter.getName1();
+            LLEventWithID pair(waiter.suspend());
+            result = pair.first;
+            which  = pair.second;
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<7>()
+    {
+        clear();
+        set_test_name("coroPumps reply");
+        DEBUG;
+        LLCoros::instance().launch("test<7>", coroPumps);
+        debug("about to send");
+        LLEventPumps::instance().obtain(replyName).post("received");
+        debug("back from send");
+        ensure_equals(result.asString(), "received");
+        ensure_equals("which pump", which, 0);
+    }
+
+    template<> template<>
+    void object::test<8>()
+    {
+        clear();
+        set_test_name("coroPumps error");
+        DEBUG;
+        LLCoros::instance().launch("test<8>", coroPumps);
+        debug("about to send");
+        LLEventPumps::instance().obtain(errorName).post("badness");
+        debug("back from send");
+        ensure_equals(result.asString(), "badness");
+        ensure_equals("which pump", which, 1);
+    }
+
+    void coroPumpsNoEx()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            replyName = waiter.getName0();
+            errorName = waiter.getName1();
+            result = waiter.suspendWithException();
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<9>()
+    {
+        clear();
+        set_test_name("coroPumpsNoEx");
+        DEBUG;
+        LLCoros::instance().launch("test<9>", coroPumpsNoEx);
+        debug("about to send");
+        LLEventPumps::instance().obtain(replyName).post("received");
+        debug("back from send");
+        ensure_equals(result.asString(), "received");
+    }
+
+    void coroPumpsEx()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            replyName = waiter.getName0();
+            errorName = waiter.getName1();
+            try
+            {
+                result = waiter.suspendWithException();
+                debug("no exception");
+            }
+            catch (const LLErrorEvent& e)
+            {
+                debug(STRINGIZE("exception " << e.what()));
+                errordata = e.getData();
+            }
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<10>()
+    {
+        clear();
+        set_test_name("coroPumpsEx");
+        DEBUG;
+        LLCoros::instance().launch("test<10>", coroPumpsEx);
+        debug("about to send");
+        LLEventPumps::instance().obtain(errorName).post("badness");
+        debug("back from send");
+        ensure("no result", result.isUndefined());
+        ensure_equals("got error", errordata.asString(), "badness");
+    }
+
+    void coroPumpsNoLog()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            replyName = waiter.getName0();
+            errorName = waiter.getName1();
+            result = waiter.suspendWithLog();
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<11>()
+    {
+        clear();
+        set_test_name("coroPumpsNoLog");
+        DEBUG;
+        LLCoros::instance().launch("test<11>", coroPumpsNoLog);
+        debug("about to send");
+        LLEventPumps::instance().obtain(replyName).post("received");
+        debug("back from send");
+        ensure_equals(result.asString(), "received");
+    }
+
+    void coroPumpsLog()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            replyName = waiter.getName0();
+            errorName = waiter.getName1();
+            WrapLLErrs capture;
+            try
+            {
+                result = waiter.suspendWithLog();
+                debug("no exception");
+            }
+            catch (const WrapLLErrs::FatalException& e)
+            {
+                debug(STRINGIZE("exception " << e.what()));
+                threw = e.what();
+            }
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<12>()
+    {
+        clear();
+        set_test_name("coroPumpsLog");
+        DEBUG;
+        LLCoros::instance().launch("test<12>", coroPumpsLog);
+        debug("about to send");
+        LLEventPumps::instance().obtain(errorName).post("badness");
+        debug("back from send");
+        ensure("no result", result.isUndefined());
+        ensure_contains("got error", threw, "badness");
+    }
+
+    void postAndWait1()
     {
         BEGIN
         {
@@ -254,5 +417,161 @@ namespace tut
         DEBUG;
         LLCoros::instance().launch("test<5>", [this](){ coroPumpPost(); });
         ensure_equals(result.asInteger(), 18);
+    }
+
+    void coroPumpsPost()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            LLEventWithID pair(waiter.postAndSuspend(LLSDMap("value", 23),
+                                                  immediateAPI.getPump(), "reply", "error"));
+            result = pair.first;
+            which  = pair.second;
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<17>()
+    {
+        clear();
+        set_test_name("coroPumpsPost reply");
+        DEBUG;
+        LLCoros::instance().launch("test<17>", coroPumpsPost);
+        ensure_equals(result.asInteger(), 24);
+        ensure_equals("which pump", which, 0);
+    }
+
+    void coroPumpsPost_1()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            LLEventWithID pair(
+                waiter.postAndSuspend(LLSDMap("value", 23)("fail", LLSD()),
+                                   immediateAPI.getPump(), "reply", "error"));
+            result = pair.first;
+            which  = pair.second;
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<18>()
+    {
+        clear();
+        set_test_name("coroPumpsPost error");
+        DEBUG;
+        LLCoros::instance().launch("test<18>", coroPumpsPost_1);
+        ensure_equals(result.asInteger(), 24);
+        ensure_equals("which pump", which, 1);
+    }
+
+    void coroPumpsPostNoEx()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            result = waiter.postAndSuspendWithException(LLSDMap("value", 8),
+                                                     immediateAPI.getPump(), "reply", "error");
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<19>()
+    {
+        clear();
+        set_test_name("coroPumpsPostNoEx");
+        DEBUG;
+        LLCoros::instance().launch("test<19>", coroPumpsPostNoEx);
+        ensure_equals(result.asInteger(), 9);
+    }
+
+    void coroPumpsPostEx()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            try
+            {
+                result = waiter.postAndSuspendWithException(
+                    LLSDMap("value", 9)("fail", LLSD()),
+                    immediateAPI.getPump(), "reply", "error");
+                debug("no exception");
+            }
+            catch (const LLErrorEvent& e)
+            {
+                debug(STRINGIZE("exception " << e.what()));
+                errordata = e.getData();
+            }
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<20>()
+    {
+        clear();
+        set_test_name("coroPumpsPostEx");
+        DEBUG;
+        LLCoros::instance().launch("test<20>", coroPumpsPostEx);
+        ensure("no result", result.isUndefined());
+        ensure_equals("got error", errordata.asInteger(), 10);
+    }
+
+    void coroPumpsPostNoLog()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            result = waiter.postAndSuspendWithLog(LLSDMap("value", 30),
+                                               immediateAPI.getPump(), "reply", "error");
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<21>()
+    {
+        clear();
+        set_test_name("coroPumpsPostNoLog");
+        DEBUG;
+        LLCoros::instance().launch("test<21>", coroPumpsPostNoLog);
+        ensure_equals(result.asInteger(), 31);
+    }
+
+    void coroPumpsPostLog()
+    {
+        BEGIN
+        {
+            LLCoroEventPumps waiter;
+            WrapLLErrs capture;
+            try
+            {
+                result = waiter.postAndSuspendWithLog(
+                    LLSDMap("value", 31)("fail", LLSD()),
+                    immediateAPI.getPump(), "reply", "error");
+                debug("no exception");
+            }
+            catch (const WrapLLErrs::FatalException& e)
+            {
+                debug(STRINGIZE("exception " << e.what()));
+                threw = e.what();
+            }
+        }
+        END
+    }
+
+    template<> template<>
+    void object::test<22>()
+    {
+        clear();
+        set_test_name("coroPumpsPostLog");
+        DEBUG;
+        LLCoros::instance().launch("test<22>", coroPumpsPostLog);
+        ensure("no result", result.isUndefined());
+        ensure_contains("got error", threw, "32");
     }
 }
