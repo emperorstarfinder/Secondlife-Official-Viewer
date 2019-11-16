@@ -32,6 +32,7 @@
 #include "llcoros.h"
 #include "llcorehttputil.h"
 #include "lluuid.h"
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 class LLCoprocedurePool;
 
@@ -76,6 +77,7 @@ public:
     size_t count() const;
     size_t count(const std::string &pool) const;
 
+    void close();
     void close(const std::string &pool);
     
 private:
