@@ -1108,22 +1108,22 @@ class DarwinManifest(ViewerManifest):
                         # app is the directory name of the app bundle, with app/Contents/MacOS/helper as the executable
                         app = helper + ".app"
 
-                    # copy DullahanHelper.app
+                        # copy DullahanHelper.app
                         self.path2basename(relpkgdir, app)
 
                     # and fix that up with a Frameworks/CEF symlink too
                     with self.prefix(dst=os.path.join(
                             app, 'Contents', 'Frameworks')):
-                            # from Dullahan Helper *.app/Contents/Frameworks/Chromium Embedded
+                        # from Dullahan Helper *.app/Contents/Frameworks/Chromium Embedded
                         # Framework.framework back to
                         # SLPlugin.app/Contents/Frameworks/Chromium Embedded Framework.framework
                         # Since SLPlugin_framework is itself a
                         # symlink, don't let relsymlinkf() resolve --
                         # explicitly call relpath(symlink=True) and
                         # create that symlink here.
-                            helper_framework = \
-                            self.symlinkf(self.relpath(SLPlugin_framework, symlink=True),
-                                          catch=False)
+                        helper_framework = \
+                        self.symlinkf(self.relpath(SLPlugin_framework, symlink=True),
+                                      catch=False)
 
                     # change_command includes install_name_tool, the
                     # -change subcommand and the old framework rpath
