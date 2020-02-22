@@ -79,7 +79,7 @@ class LLViewerMedia: public LLSingleton<LLViewerMedia>
 
 public:
 	// String to get/set media autoplay in gSavedSettings
-	static const char* AUTO_PLAY_MEDIA_SETTING;
+    static const char* AUTO_PLAY_MEDIA_SETTING;
 	static const char* SHOW_MEDIA_ON_OTHERS_SETTING;
 	static const char* SHOW_MEDIA_WITHIN_PARCEL_SETTING;
 	static const char* SHOW_MEDIA_OUTSIDE_PARCEL_SETTING;
@@ -320,6 +320,7 @@ public:
 	/*virtual*/ BOOL	handleMouseDown(S32 x, S32 y, MASK mask) { return FALSE; };
 	/*virtual*/ BOOL	handleHover(S32 x, S32 y, MASK mask) { return FALSE; };
 	/*virtual*/ BOOL	handleScrollWheel(S32 x, S32 y, S32 clicks) { return FALSE; };
+	/*virtual*/ BOOL	handleScrollHWheel(S32 x, S32 y, S32 clicks) { return FALSE; };
 	/*virtual*/ BOOL	handleDoubleClick(S32 x, S32 y, MASK mask) { return FALSE; };
 	/*virtual*/ BOOL	handleRightMouseDown(S32 x, S32 y, MASK mask) { return FALSE; };
 	/*virtual*/ BOOL	handleRightMouseUp(S32 x, S32 y, MASK mask) { return FALSE; };
