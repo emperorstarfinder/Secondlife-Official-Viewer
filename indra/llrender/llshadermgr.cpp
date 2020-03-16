@@ -664,14 +664,14 @@ GLhandleARB LLShaderMgr::loadShaderFile(const std::string& filename, S32 & shade
 		file = LLFile::fopen(open_file_name, "r");		/* Flawfinder: ignore */
 		if (file)
 		{
-			LL_DEBUGS("ShaderLoading") << "Loading file: " << open_file_name << " (Want class " << gpu_class << ")" << LL_ENDL;            
+			LL_INFOS("ShaderLoading") << "Loading file: " << open_file_name << " (Want class " << gpu_class << ")" << LL_ENDL;            
 			break; // done
 		}
 	}
 	
 	if (file == NULL)
 	{
-		LL_SHADER_LOADING_WARNS() << "GLSL Shader file not found: " << open_file_name << LL_ENDL;
+		LL_WARNS() << "GLSL Shader file not found: " << open_file_name << LL_ENDL;
 		return 0;
 	}
 

@@ -380,6 +380,8 @@ BOOL LLGLSLShader::createShader(std::vector<LLStaticHashedString> * attributes,
                                 U32 varying_count,
                                 const char** varyings)
 {
+    LL_INFOS() << "CreateShader, loading " << mName << LL_ENDL;
+
     unloadInternal();
 
     sInstances.insert(this);
@@ -407,13 +409,14 @@ BOOL LLGLSLShader::createShader(std::vector<LLStaticHashedString> * attributes,
     for ( ; fileIter != mShaderFiles.end(); fileIter++ )
     {
         GLhandleARB shaderhandle = LLShaderMgr::instance()->loadShaderFile((*fileIter).first, mShaderLevel, (*fileIter).second, &mDefines, mFeatures.mIndexedTextureChannels);
-        LL_DEBUGS("ShaderLoading") << "SHADER FILE: " << (*fileIter).first << " mShaderLevel=" << mShaderLevel << LL_ENDL;
+        LL_INFOS("ShaderLoading") << "SHADER FILE: " << (*fileIter).first << " mShaderLevel=" << mShaderLevel << LL_ENDL;
         if (shaderhandle)
         {
             attachObject(shaderhandle);
         }
         else
         {
+            LL_WARNS("ShaderLoading") << "Shader failed to load (no handle): shader " << mName << LL_ENDL;
             success = FALSE;
         }
     }
@@ -421,6 +424,7 @@ BOOL LLGLSLShader::createShader(std::vector<LLStaticHashedString> * attributes,
     // Attach existing objects
     if (!LLShaderMgr::instance()->attachShaderFeatures(this))
     {
+        LL_WARNS("ShaderLoading") << "Attachment of existing shader objects failed: shader " << mName << LL_ENDL;
         return FALSE;
     }
 
@@ -441,10 +445,18 @@ BOOL LLGLSLShader::createShader(std::vector<LLStaticHashedString> * attributes,
     if (success)
     {
         success = mapAttributes(attributes);
+        if (!success)
+        {
+            LL_WARNS("ShaderLoading") << "Attribute mapping failed: shader " << mName << LL_ENDL;
+        }
     }
     if (success)
     {
         success = mapUniforms(uniforms);
+        if (!success)
+        {
+            LL_WARNS("ShaderLoading") << "Uniform mapping failed: shader " << mName << LL_ENDL;
+        }
     }
     if( !success )
     {

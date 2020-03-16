@@ -644,7 +644,15 @@ void LLViewerShaderMgr::setShaders()
                 mShaderLevel[SHADER_AVATAR] = avatar_class;
 
                 loaded = loadShadersAvatar();
-                llassert(loaded);
+                if (loaded)
+                {
+                    LL_INFOS() << "Loaded avatar shaders." << LL_ENDL;
+                }
+                else
+                {
+                    LL_WARNS() << "Failed to load avatar shaders." << LL_ENDL;
+                    llassert(loaded);
+                }
 
                 if (mShaderLevel[SHADER_AVATAR] != avatar_class)
                 {
@@ -678,7 +686,15 @@ void LLViewerShaderMgr::setShaders()
                 loadShadersAvatar(); // unloads
 
                 loaded = loadShadersObject();
-                llassert(loaded);
+                if (loaded)
+                {
+                    LL_INFOS() << "Unload avatar shaders, re-loaded shaders object." << LL_ENDL;
+                }
+                else
+                {
+                    LL_WARNS() << "Failed to re-load shaders object." << LL_ENDL;
+                    llassert(loaded);
+                }
             }
         }
 
@@ -1302,8 +1318,8 @@ BOOL LLViewerShaderMgr::loadShadersDeferred()
 	BOOL success = TRUE;
 
     if (success)
-	{
-		gDeferredHighlightProgram.mName = "Deferred Highlight Shader";
+    {
+        gDeferredHighlightProgram.mName = "Deferred Highlight Shader";
 		gDeferredHighlightProgram.mShaderFiles.clear();
 		gDeferredHighlightProgram.mShaderFiles.push_back(make_pair("interface/highlightV.glsl", GL_VERTEX_SHADER_ARB));
 		gDeferredHighlightProgram.mShaderFiles.push_back(make_pair("deferred/highlightF.glsl", GL_FRAGMENT_SHADER_ARB));
